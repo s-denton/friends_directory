@@ -107,7 +107,7 @@ function showAllRecords() {
 		// Fetch and print all the records:
 		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 			echo '
-			<tr data-toggle="collapse" data-target="#accordian' . $row['fid'] . '" class="clickable">
+			<tr data-toggle="collapse" data-target="#records-accordian' . $row['fid'] . '" class="clickable">
 				<td align="left">' . $row['last_name'] . '</td>
 				<td align="left">' . $row['first_name'] . '</td>
 				<td align="left">' . $row['email'] . '</td>
@@ -115,8 +115,8 @@ function showAllRecords() {
 				<td align="left">' . $row['association'] . '</td>
 			</tr>
 			<tr>
-				<td colspan="5">
-					<div id="accordian' . $row['fid'] . '" class="text-center collapse">
+				<td colspan="5" id="accordian-row">
+					<div id="records-accordian' . $row['fid'] . '" class="text-center collapse">
 						<p class="lead">
 							<strong>' . $row['first_name'] . ' ' . $row['last_name'] . '</strong><br>
 							' . $row['company'] . '<br>
