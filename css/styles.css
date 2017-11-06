@@ -1,0 +1,103 @@
+/**************** tags ****************/
+html, body {
+	font-weight: 100;
+}
+
+select {
+	display: block;
+	margin: 0 auto;
+}
+
+/**************** id's ****************/
+#banner-title {
+	font-weight: 100;
+	text-shadow: 2px 2px 3px #ccc;
+	float: left;
+	margin-left: 25px;
+}
+
+#banner-logo {
+	float: right;
+	margin-right: 0px;
+}
+
+#github-icon {
+	font-size: 1.5em;
+}
+
+#github-link {
+	color: inherit;
+}
+
+#nav-btn {
+	float: right;
+}
+
+#page-container {
+	max-width: 1000px;
+	margin-top: 30px;
+	padding: 30px
+}
+
+#page-footer {
+	margin-top: 60px;
+}
+
+/**************** classes ****************/
+.content-title {
+	font-weight: 100;
+	text-shadow: 2px 2px 3px #ccc;
+	margin-top: 20px;
+}
+
+.content-container {
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.form-container {
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.navbar li {
+	border-right: 1px solid #aaa;
+}
+
+.navbar li:last-child {
+	border-right: none;
+}
+
+.submit-btn {
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 140px;
+}
+
+/**************** media queries ****************/
+@media (max-width: 400px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
