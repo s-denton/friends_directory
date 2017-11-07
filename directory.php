@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<hr>
 	<div class="content-container text-left">
 		<h2 class="content-title"><span><i class="fa fa-users"></i></span> All Entries</h2>
-		<hr>
 		<table class="table table-hover table-sm table-responsive">
 			<thead>
 				<tr>
