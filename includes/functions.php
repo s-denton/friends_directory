@@ -124,20 +124,26 @@ function showAllRecords() {
 				<td colspan="5">
 					<div class="card">
 						<div class="card-block">
-							<h4 class="card-title">
-							' . $row['first_name'] . ' ' . $row['last_name'] . '<br>
-							</h4>
-							<h6 class="card-subtitle">
-							' . $row['company'] . '<br><br>
-							</h6>
-							<p class="card-text">
-							' . $row['street'] . '<br>
-							' . $row['city'] . ', ' . $row['state'] . ' ' . $row['zip'] . '<br>
-							' . $row['email'] . '<br>
-							' . $row['phone'] . '<br>
-							' . $row['birthday'] . '<br>
-							' . $row['association'] . '
-							</p>
+							<div class="row">
+								<div class="col-md-6 text-right card-left">
+									<h4 class="card-title">
+									' . $row['first_name'] . ' ' . $row['last_name'] . '<br>
+									</h4>
+									<h6 class="card-subtitle">
+									' . $row['company'] . '<br><br>
+									</h6>
+								</div>
+								<div class="col-md-6 text-left">
+									<p class="card-text">
+									' . $row['street'] . '<br>
+									' . $row['city'] . ', ' . $row['state'] . ' ' . $row['zip'] . '<br>
+									' . $row['email'] . '<br>
+									' . $row['phone'] . '<br>
+									' . $row['birthday'] . '<br>
+									' . $row['association'] . '
+									</p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</td>

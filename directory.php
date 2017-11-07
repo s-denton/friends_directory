@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	        <a class="nav-link" href="directory.php">All Entries</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="new_entry.php">Add a New Entry</a>
+	        <a class="nav-link" href="new_entry.php">Add New Entry</a>
 	      </li>
 	    </ul>
 	    <form class="form-inline" action="login.php">
