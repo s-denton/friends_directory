@@ -44,6 +44,10 @@ select {
 }
 
 /**************** classes ****************/
+.card {
+	padding: 20px;
+}
+
 .content-title {
 	font-weight: 100;
 	text-shadow: 2px 2px 3px #ccc;
@@ -70,6 +74,10 @@ select {
 
 .navbar li:last-child {
 	border-right: none;
+}
+
+.row-icon {
+
 }
 
 .submit-btn {

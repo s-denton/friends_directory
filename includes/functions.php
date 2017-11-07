@@ -113,20 +113,32 @@ function showAllRecords() {
 				<td align="left">' . $row['email'] . '</td>
 				<td align="left">' . $row['phone'] . '</td>
 				<td align="left">' . $row['association'] . '</td>
+				<td colspan="2" align="center">
+					<button type="button" title="Edit Record" class="btn btn-primary btn-sm row-icon" value="' . $row['fid'] . '"><span><i class="fa fa-pencil-square-o table-icon" aria-hidden="true"></i></span>
+					</button>
+					<button type="button" title="Delete Record" class="btn btn-danger btn-sm row-icon" value="' . $row['fid'] . '"><span><i class="fa fa-trash-o table-icon" aria-hidden="true"></i></span>
+					</button>
+				</td>
 			</tr>
-			<tr>
-				<td colspan="5" id="accordian-row">
-					<div id="records-accordian' . $row['fid'] . '" class="text-center collapse">
-						<p class="lead">
-							<strong>' . $row['first_name'] . ' ' . $row['last_name'] . '</strong><br>
-							' . $row['company'] . '<br>
+			<tr id="records-accordian' . $row['fid'] . '" class="collapse">
+				<td colspan="5">
+					<div class="card">
+						<div class="card-block">
+							<h4 class="card-title">
+							' . $row['first_name'] . ' ' . $row['last_name'] . '<br>
+							</h4>
+							<h6 class="card-subtitle">
+							' . $row['company'] . '<br><br>
+							</h6>
+							<p class="card-text">
 							' . $row['street'] . '<br>
 							' . $row['city'] . ', ' . $row['state'] . ' ' . $row['zip'] . '<br>
 							' . $row['email'] . '<br>
 							' . $row['phone'] . '<br>
 							' . $row['birthday'] . '<br>
 							' . $row['association'] . '
-						</p>
+							</p>
+						</div>
 					</div>
 				</td>
 			</tr>

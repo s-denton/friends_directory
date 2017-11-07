@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<th>Email</th>
 					<th>Phone</th>
 					<th>Association</th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
