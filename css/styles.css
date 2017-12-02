@@ -67,6 +67,10 @@ select {
 	margin: 0 auto;
 }
 
+.hidden-row {
+	padding: 0 !important;
+}
+
 .navbar li {
 	border-right: 1px solid #aaa;
 }
