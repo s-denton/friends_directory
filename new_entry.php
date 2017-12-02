@@ -1,9 +1,10 @@
-<?php 
+<?php
+session_start();
 include 'includes/header.html'; 
 include 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  insertRecord($_POST['first_name'], $_POST['last_name'], $_POST['company'], $_POST['street'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['phone'], $_POST['birthday'], $_POST['association']);
+  insertRecord($_SESSION["username"], $_POST['first_name'], $_POST['last_name'], $_POST['company'], $_POST['street'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['phone'], $_POST['birthday'], $_POST['association']);
 }
 ?>
 
@@ -21,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </li>
       </ul>
       <form class="form-inline" action="login.php">
-      <a href="index.php"><button class="btn btn-primary" id="nav-btn" type="button">Logout</button></a>
+      <a href="logout.php"><button class="btn btn-primary" id="nav-btn" type="button"><i class="fa fa-sign-out"></i> Logout</button></a>
     </form>
     </div>
   </nav>

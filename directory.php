@@ -1,10 +1,12 @@
-<?php 
+<?php
+session_start();
 include 'includes/header.html';
 include 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!empty($_POST['username']))
 		$username = $_POST['username'];
+		$_SESSION["username"] = "$username";
 
 	if (!empty($_POST['password']))
 		$password = $_POST['password'];
@@ -29,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	      </li>
 	    </ul>
 	    <form class="form-inline" action="login.php">
-			<a href="index.php"><button class="btn btn-primary" id="nav-btn" type="button">Logout</button></a>
+			<a href="logout.php"><button class="btn btn-primary" id="nav-btn" type="button"><i class="fa fa-sign-out"></i> Logout</button></a>
 		</form>
 	  </div>
 	</nav>
@@ -49,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				</tr>
 			</thead>
 			<tbody>
-				<?php showAllRecords(); ?>
+				<?php showAllRecords($_SESSION["username"]); ?>
 			</tbody>
 		</table>
 	</div>

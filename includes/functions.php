@@ -3,7 +3,7 @@
 function authenticate($login_username, $login_password) {
 	require ('includes/mysqli_connect.php');
 
-	$sql = "SELECT uid FROM Users WHERE BINARY username = '$login_username' and password = '$login_password'";
+	$sql = "SELECT * FROM Users WHERE BINARY username = '$login_username' and password = '$login_password'";
 	$result = $dbc -> query($sql);
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 	$active = $row['active'];
@@ -20,22 +20,75 @@ function authenticate($login_username, $login_password) {
 	}
 }
 
-// delete a book from the db
-function deleteRecord($bookID) {
+// create a new user
+function createUser($username, $password, $confirm_password, $firstname, $lastname, $email) {
+	require ('includes/mysqli_connect.php');
+
+	// check if the passwords match
+	if($password !== $confirm_password) {
+		echo "<p class='bg-danger text-white'>Passwords do not match!</p>";
+	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+	    include 'includes/footer.html';
+	    exit();
+	}
+
+	// check if email is already registered
+	$email_exists_sql = "SELECT uid FROM Users WHERE BINARY email = '$email'";
+	$result = $dbc -> query($email_exists_sql);
+	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	$active = $row['active'];
+	$count = mysqli_num_rows($result);
+
+	// If result matched email, user is already registered	
+	if($count == 1) {
+	    echo "<p class='bg-danger text-white'>This email address is already registered</p>";
+	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+	    include 'includes/footer.html';
+	    exit();
+	}
+
+	// check if user already exists
+	$user_exists_sql = "SELECT uid FROM Users WHERE BINARY username = '$username'";
+	$result = $dbc -> query($user_exists_sql);
+	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	$active = $row['active'];
+	$count = mysqli_num_rows($result);
+
+	// If result matched, username already exists	
+	if($count == 1) {
+	    echo "<p class='bg-danger text-white'>Username already exists, please choose another</p>";
+	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+	    include 'includes/footer.html';
+	    exit();
+	}
+
+	// insert the user into the user table
+	$insert_sql = "INSERT INTO Users (username, password, firstname, lastname, email) VALUES ('$username', '$password', '$firstname', '$lastname', '$email')";
+
+	// check for connection to database, else error
+	if (mysqli_query($dbc, $insert_sql)) {
+		echo "<script>location='index.php'</script>";
+	} else {
+		echo "<br> <p class='bg-danger text-white'>Error Occured</p>";	
+	}
+}
+
+// delete a record from the db
+function deleteRecord($username, $fid) {
 	require ('includes/mysqli_connect.php'); // Connect to the db.
 
-	$sql = "DELETE FROM Books WHERE Book_id = '$bookID'";
+	$sql = "DELETE FROM Directory WHERE BINARY username = '$username' AND fid = '$fid";
 
 	if(mysqli_query($dbc, $sql)) {
-	    echo "<p class='bg-success text-white'>Book successfully deleted</p>";
+	    echo "<script>alert('Record successfully deleted!');</script>";
 	}else {
 	    echo "<p class='bg-danger text-white'>Error deleting book: " . mysqli_error($dbc) . "</p>";
 	}
 
 }
 
-// insert a new entry into the db
-function insertRecord($fname, $lname, $company, $street, $city, $state, $zip, $email, $phone, $bday, $assoc) {
+// insert a new record into the db
+function insertRecord($username, $fname, $lname, $company, $street, $city, $state, $zip, $email, $phone, $bday, $assoc) {
 	require ('includes/mysqli_connect.php'); // Connect to the db.
 
 	// first check for a duplicate entry
@@ -51,7 +104,7 @@ function insertRecord($fname, $lname, $company, $street, $city, $state, $zip, $e
 	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
 	}
 
-	$insert_sql = "INSERT INTO Directory (first_name, last_name, company, street, city, state, zip, email, phone, birthday, association) VALUES ('$fname', '$lname', '$company', '$street', '$city', '$state', '$zip', '$email', '$phone', '$bday', '$assoc')";
+	$insert_sql = "INSERT INTO Directory (username, first_name, last_name, company, street, city, state, zip, email, phone, birthday, association) VALUES ('$username', '$fname', '$lname', '$company', '$street', '$city', '$state', '$zip', '$email', '$phone', '$bday', '$assoc')";
 
 	// check for connection to database, else error
 	if (mysqli_query($dbc, $insert_sql)) {
@@ -62,44 +115,13 @@ function insertRecord($fname, $lname, $company, $street, $city, $state, $zip, $e
 
 }
 
-// populate a dropdown list of books
-function isbnList() {
-	require ('includes/mysqli_connect.php'); // Connect to the db.
-
-	// Make the query:
-	$q = "SELECT * FROM Books ORDER BY ISBN ASC";		
-	$r = @mysqli_query ($dbc, $q); // Run the query.
-
-	if ($r) { // If it ran OK, display the records.
-		
-		// Fetch and print all the records:
-		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-			echo '<option value="' . $row['Book_id'] . '">' . $row['ISBN'] . '</option>';
-		}
-		
-		mysqli_free_result ($r); // Free up the resources.	
-
-	} else { // If it did not run OK.
-
-		// Public message:
-		echo '<p class="bg-danger text-white">The books list could not be retrieved.</p>';
-		
-		// Debugging message:
-		echo '<p class="bg-danger text-white">' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
-		
-	} // End of if ($r) IF.
-
-	mysqli_close($dbc); // Close the database connection.
-}
-
 // display the records in the db
-function showAllRecords() {
+function showAllRecords($username) {
 	// This script retrieves all the records from the users table.
-
 	require ('includes/mysqli_connect.php'); // Connect to the db.
 			
 	// Make the query:
-	$q = "SELECT * FROM Directory ORDER BY last_name ASC";		
+	$q = "SELECT * FROM Directory WHERE BINARY username = '$username' ORDER BY last_name ASC";		
 	$r = @mysqli_query ($dbc, $q); // Run the query.
 
 	if ($r) { // If it ran OK, display the records.
@@ -107,21 +129,21 @@ function showAllRecords() {
 		// Fetch and print all the records:
 		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 			echo '
-			<tr data-toggle="collapse" data-target="#records-accordian' . $row['fid'] . '" class="clickable">
+			<tr data-toggle="collapse" data-target="#records-accordian' . $row['fid'] . '" class="record-row clickable">
 				<td align="left">' . $row['last_name'] . '</td>
 				<td align="left">' . $row['first_name'] . '</td>
 				<td align="left">' . $row['email'] . '</td>
 				<td align="left">' . $row['phone'] . '</td>
 				<td align="left">' . $row['association'] . '</td>
 				<td colspan="2" align="center">
-					<button type="button" title="Edit Record" class="btn btn-primary btn-sm row-icon" value="' . $row['fid'] . '"><span><i class="fa fa-pencil-square-o table-icon" aria-hidden="true"></i></span>
+					<button type="button" id="editRecordBtn" title="Edit Record" class="btn btn-primary btn-sm row-icon" value="' . $row['fid'] . '"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
 					</button>
-					<button type="button" title="Delete Record" class="btn btn-danger btn-sm row-icon" value="' . $row['fid'] . '"><span><i class="fa fa-trash-o table-icon" aria-hidden="true"></i></span>
+					<button type="button" id="deleteRecordBtn" title="Delete Record" class="btn btn-danger btn-sm row-icon" value="' . $row['fid'] . '"><span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
 					</button>
 				</td>
 			</tr>
-			<tr id="records-accordian' . $row['fid'] . '" class="collapse">
-				<td colspan="5">
+			<tr id="records-accordian' . $row['fid'] . '" class="record-content collapse">
+				<td colspan="7" align="center">
 					<div class="card">
 						<div class="card-block">
 							<div class="row">
@@ -156,7 +178,7 @@ function showAllRecords() {
 	} else { // If it did not run OK.
 
 		// Public message:
-		echo '<p class="bg-danger text-white">The current books could not be retrieved. We apologize for any inconvenience.</p>';
+		echo '<p class="bg-danger text-white">The current directory could not be retrieved. We apologize for any inconvenience.</p>';
 		
 		// Debugging message:
 		echo '<p class="bg-danger text-white">' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
@@ -166,7 +188,7 @@ function showAllRecords() {
 	mysqli_close($dbc); // Close the database connection.
 }
 
-// update an existing book in the db
+// update an existing record in the db
 function updateRecord($bookID, $isbn, $title, $author, $year) {
 	require ('includes/mysqli_connect.php'); // Connect to the db.
 
