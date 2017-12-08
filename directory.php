@@ -14,7 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_SESSION["username"])) {
 	if (authenticate($username, $password) != true) {
 		include 'includes/footer.html';
 		exit();
-	}
+	}	
+} elseif (empty($_SESSION["username"])) {
+	echo "<p class='bg-danger text-white'>You are not logged in</p>";
+	echo "<button type='button' class='btn btn-lg btn-primary' style='margin-top: 20px;' onclick='history.back()'>Go Back</button>";
+	include 'includes/footer.html';
+	exit();
 }
 ?>
 	<nav class="navbar navbar-light navbar-expand-md">
