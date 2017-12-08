@@ -24,7 +24,7 @@ $(document).ready(function() {
 	});
 	////////////////////////////////////////////////////////
 
-	///////// Update Song Modal Toggle ///////////
+	///////// Update Record Modal Toggle ///////////
 	var record_id = "";
 	$(".edit-record-btn").click(function() {
 		record_id = $(this).val();
