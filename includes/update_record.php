@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-<?
+<?php session_start();
+
 // insert update record form info into database
 include ('mysqli_connect.php');
 
@@ -34,11 +30,9 @@ $sql = "UPDATE Directory
 			association = IF('$assoc' = '', association, '$assoc')
 		WHERE fid = '$record_id'";
 
-if($result = $dbc -> query($sql)) {
+if(mysqli_query($dbc, $sql)) {
 	echo "success";
 }else {
 	die(header("HTTP/1.0 404 Not Found"));
 }
 ?>
-</body>
-</html>

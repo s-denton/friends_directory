@@ -130,8 +130,8 @@ function showAllRecords($username) {
 		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 			echo '
 			<tr class="clickable">
-				<td align="left">' . $row['last_name'] . '</td>
-				<td align="left">' . $row['first_name'] . '</td>
+				<td align="left" class="row-last-name" value="' . $row['last_name'] . '">' . $row['last_name'] . '</td>
+				<td align="left" class="row-first-name" value="' . $row['first_name'] . '">' . $row['first_name'] . '</td>
 				<td align="left">' . $row['email'] . '</td>
 				<td align="left">' . $row['phone'] . '</td>
 				<td align="left">' . $row['association'] . '</td>
