@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				<input type="email" id="email" class="form-control form-control-lg" name="email" size="20" maxlength="40" value="<?php $_POST['email']; ?>">
 			</div>
 			<div class="form-group row">
+				<button type="button" onclick="window.location.href='index.php'" class="btn btn-lg btn-primary submit-btn">Go Back</button>
 				<button type="submit" name="submit" class="btn btn-lg btn-success submit-btn">Register</button>
 			</div>
 		</form>
