@@ -129,16 +129,18 @@ function showAllRecords($username) {
 		// Fetch and print all the records:
 		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 			echo '
-			<tr data-toggle="collapse" data-target="#records-accordian' . $row['fid'] . '" data-parent="#directory-table" class="clickable">
+			<tr class="clickable">
 				<td align="left">' . $row['last_name'] . '</td>
 				<td align="left">' . $row['first_name'] . '</td>
 				<td align="left">' . $row['email'] . '</td>
 				<td align="left">' . $row['phone'] . '</td>
 				<td align="left">' . $row['association'] . '</td>
 				<td colspan="2" align="center">
-					<button type="button" title="Edit Record" class="btn btn-primary btn-sm edit-record-btn" value="' . $row['fid'] . '"><span><i class="fa fa-pencil-square-o table-icon" aria-hidden="true"></i></span>
+					<button data-toggle="collapse" data-target="#records-accordian' . $row['fid'] . '" data-parent="#directory-table" type="button" title="Show More" class="btn btn-primary btn-sm table-btn"><span><i class="fa fa-info" aria-hidden="true"></i></span>
 					</button>
-					<button type="button" onclick="deleteRecord" title="Delete Record" class="btn btn-danger btn-sm delete-record-btn" value="' . $row['fid'] . '"><span><i class="fa fa-trash-o table-icon" aria-hidden="true"></i></span>
+					<button type="button" title="Edit Record" class="btn btn-primary btn-sm table-btn edit-record-btn" value="' . $row['fid'] . '"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+					</button>
+					<button type="button" title="Delete Record" class="btn btn-danger btn-sm table-btn delete-record-btn" value="' . $row['fid'] . '"><span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
 					</button>
 				</td>
 			</tr>

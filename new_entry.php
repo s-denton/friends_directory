@@ -57,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <input type="number" name="zip" class="form-control input-lg" placeholder="Zip Code">
         </div>
         <div class="form-group row">
-          <input type="text" name="email" class="form-control input-lg" placeholder="Email">
+          <input type="email" name="email" class="form-control input-lg" placeholder="Email">
         </div>
         <div class="form-group row">
-          <input type="text" name="phone" class="form-control input-lg" placeholder="Phone" data-mask="000-000-0000">
+          <input type="tel" name="phone" class="form-control input-lg" placeholder="Phone" data-mask="000-000-0000">
         </div>
         <div class="form-group row">
           <input type="date" name="birthday" class="form-control input-lg" placeholder="Birthday (yyyy-mm-dd)" data-mask="0000-00-00">

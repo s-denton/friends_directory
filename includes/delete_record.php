@@ -4,7 +4,7 @@
 </head>
 <body>
 <?
-require ('includes/mysqli_connect.php'); // Connect to the db.
+require ('mysqli_connect.php'); // Connect to the db.
 
 $recordID = $_POST["record_id"];
 
