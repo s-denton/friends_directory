@@ -24,52 +24,82 @@ function authenticate($login_username, $login_password) {
 function createUser($username, $password, $confirm_password, $firstname, $lastname, $email) {
 	require ('includes/mysqli_connect.php');
 
-	// check if the passwords match
-	if($password !== $confirm_password) {
-		echo "<p class='bg-danger text-white'>Passwords do not match!</p>";
-	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
-	    include 'includes/footer.html';
-	    exit();
+	if(!empty($username)) {
+		if(!preg_match('/^[\w.-]+$/', $username)) {
+			$error .= 'Username is incorrect format<br>';
+		}
 	}
 
-	// check if email is already registered
-	$email_exists_sql = "SELECT uid FROM Users WHERE BINARY email = '$email'";
-	$result = $dbc -> query($email_exists_sql);
-	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$active = $row['active'];
-	$count = mysqli_num_rows($result);
-
-	// If result matched email, user is already registered	
-	if($count == 1) {
-	    echo "<p class='bg-danger text-white'>This email address is already registered</p>";
-	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
-	    include 'includes/footer.html';
-	    exit();
+	if(!empty($firstname)) {
+		if(!preg_match('/^[a-z]+$/i', $firstname)) {
+			$error .= 'First Name is incorrect<br>';
+		}
 	}
 
-	// check if user already exists
-	$user_exists_sql = "SELECT uid FROM Users WHERE BINARY username = '$username'";
-	$result = $dbc -> query($user_exists_sql);
-	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$active = $row['active'];
-	$count = mysqli_num_rows($result);
-
-	// If result matched, username already exists	
-	if($count == 1) {
-	    echo "<p class='bg-danger text-white'>Username already exists, please choose another</p>";
-	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
-	    include 'includes/footer.html';
-	    exit();
+	if(!empty($lastname)) {
+		if(!preg_match('/^[a-z]+$/i', $lastname)) {
+			$error .= 'Last Name is incorrect<br>';
+		}
 	}
 
-	// insert the user into the user table
-	$insert_sql = "INSERT INTO Users (username, password, firstname, lastname, email) VALUES ('$username', '$password', '$firstname', '$lastname', '$email')";
+	if(!empty($email)) {
+		if(!preg_match('/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/', $email)) {
+			$error .= 'Email is incorrect format<br>';
+		}
+	}
 
-	// check for connection to database, else error
-	if (mysqli_query($dbc, $insert_sql)) {
-		echo "<script>location='index.php'</script>";
+	if($error) {
+		echo $error;
+
 	} else {
-		echo "<br> <p class='bg-danger text-white'>Error Occured</p>";	
+
+		// check if the passwords match
+		if($password !== $confirm_password) {
+			echo "<p class='bg-danger text-white'>Passwords do not match!</p>";
+		    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+		    include 'includes/footer.html';
+		    exit();
+		}
+
+		// check if email is already registered
+		$email_exists_sql = "SELECT uid FROM Users WHERE BINARY email = '$email'";
+		$result = $dbc -> query($email_exists_sql);
+		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+		$active = $row['active'];
+		$count = mysqli_num_rows($result);
+
+		// If result matched email, user is already registered	
+		if($count == 1) {
+		    echo "<p class='bg-danger text-white'>This email address is already registered</p>";
+		    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+		    include 'includes/footer.html';
+		    exit();
+		}
+
+		// check if user already exists
+		$user_exists_sql = "SELECT uid FROM Users WHERE BINARY username = '$username'";
+		$result = $dbc -> query($user_exists_sql);
+		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+		$active = $row['active'];
+		$count = mysqli_num_rows($result);
+
+		// If result matched, username already exists	
+		if($count == 1) {
+		    echo "<p class='bg-danger text-white'>Username already exists, please choose another</p>";
+		    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+		    include 'includes/footer.html';
+		    exit();
+		}
+
+		// insert the user into the user table
+		$insert_sql = "INSERT INTO Users (username, password, firstname, lastname, email) VALUES ('$username', '$password', '$firstname', '$lastname', '$email')";
+
+		// check for connection to database, else error
+		if (mysqli_query($dbc, $insert_sql)) {
+			echo "<script>location='index.php'</script>";
+		} else {
+			echo "<br> <p class='bg-danger text-white'>Error Occured</p>";	
+		}
 	}
 }
 
@@ -91,28 +121,99 @@ function deleteRecord($username, $fid) {
 function insertRecord($username, $fname, $lname, $company, $street, $city, $state, $zip, $email, $phone, $bday, $assoc) {
 	require ('includes/mysqli_connect.php'); // Connect to the db.
 
-	// first check for a duplicate entry
-	$select_sql = "SELECT fid FROM Directory WHERE BINARY first_name = '$fname' AND BINARY last_name = '$lname";
-	$result = $dbc -> query($select_sql);
-	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$active = $row['active'];
-	$count = mysqli_num_rows($result);
-
-	// If result matched first and last names, entry already exists	
-	if($count == 1) {
-	    echo "<p class='bg-danger text-white'>Entry already exists</p>";
-	    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+	if(!empty($fname)) {
+		if(!preg_match('/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/', $fname)) {
+			$error .= 'First Name is incorrect<br>';
+		}
 	}
 
-	$insert_sql = "INSERT INTO Directory (username, first_name, last_name, company, street, city, state, zip, email, phone, birthday, association) VALUES ('$username', '$fname', '$lname', '$company', '$street', '$city', '$state', '$zip', '$email', '$phone', '$bday', '$assoc')";
+	if(!empty($lname)) {
+		if(!preg_match('/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/', $fname)) {
+			$error .= 'Last Name is incorrect<br>';
+		}
+	}
 
-	// check for connection to database, else error
-	if (mysqli_query($dbc, $insert_sql)) {
-		echo "<script>location='directory.php'</script>";
+	if(!empty($company)) {
+		if(!preg_match('/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/', $company)) {
+			$error .= 'Company is incorrect<br>';
+		}
+	}
+
+	if(!empty($street)) {
+		if(!preg_match('/^[0-9A-Za-z ]+$/', $street)) {
+			$error .= 'Street is incorrect<br>';
+		}
+	}
+
+	if(!empty($city)) {
+		if(!preg_match('/^[A-Za-z ]+$/', $city)) {
+			$error .= 'City is incorrect<br>';
+		}
+	}
+
+	if(!empty($state)) {
+		if(!preg_match('/^[A-Z]{2}$/', $state)) {
+			$error .= 'State is incorrect format<br>';
+		}
+	}
+
+	if(!empty($zip)) {
+		if(!preg_match('/^[0-9]{5}$/', $zip)) {
+			$error .= 'Zip is incorrect format<br>';
+		}
+	}
+
+	if(!empty($email)) {
+		if(!preg_match('/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/', $email)) {
+			$error .= 'Email is incorrect format<br>';
+		}
+	}
+
+	if(!empty($phone)) {
+		if(!preg_match('/^\d{3}-\d{3}-\d{4}$/', $phone)) {
+			$error .= 'Phone is incorrect format<br>';
+		}
+	}
+
+	if(!empty($bday)) {
+		if(!preg_match('/^\d{4}-\d{2}-\d{2}$/', $bday)) {
+			$error .= 'Birthday is incorrect format<br>';
+		}
+	}
+
+	if(!empty($assoc)) {
+		if(!preg_match('/^[a-z]+$/i', $assoc)) {
+			$error .= 'Association is incorrect<br>';
+		}
+	}
+
+	if($error) {
+		echo $error;
+		
 	} else {
-		echo "<br> <p class='bg-danger text-white'>Error Occured</p>";	
-	}
 
+		// first check for a duplicate entry
+		$select_sql = "SELECT fid FROM Directory WHERE BINARY first_name = '$fname' AND BINARY last_name = '$lname";
+		$result = $dbc -> query($select_sql);
+		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+		$active = $row['active'];
+		$count = mysqli_num_rows($result);
+
+		// If result matched first and last names, entry already exists	
+		if($count == 1) {
+		    echo "<p class='bg-danger text-white'>Entry already exists</p>";
+		    echo "<button type='button' class='btn btn-lg btn-primary submit-btn' onclick='history.back()'>Go Back</button>";
+		}
+
+		$insert_sql = "INSERT INTO Directory (username, first_name, last_name, company, street, city, state, zip, email, phone, birthday, association) VALUES ('$username', '$fname', '$lname', '$company', '$street', '$city', '$state', '$zip', '$email', '$phone', '$bday', '$assoc')";
+
+		// check for connection to database, else error
+		if (mysqli_query($dbc, $insert_sql)) {
+			echo "<script>location='directory.php'</script>";
+		} else {
+			echo "<br> <p class='bg-danger text-white'>Error Occured</p>";	
+		}
+	}
 }
 
 // display the records in the db
@@ -188,29 +289,6 @@ function showAllRecords($username) {
 	} // End of if ($r) IF.
 
 	mysqli_close($dbc); // Close the database connection.
-}
-
-// update an existing record in the db
-function updateRecord($bookID, $isbn, $title, $author, $year) {
-	require ('includes/mysqli_connect.php'); // Connect to the db.
-
-	if ($isbn == "" && $title == "" && $author == "" && $year == "") {
-		echo "<p class='bg-danger text-white'>At least one field must be filled out to update</p>";
-	} else {
-
-		$sql = "UPDATE Books 
-				SET ISBN = IF('$isbn' = '', ISBN, '$isbn'),
-					Author = IF('$author' = '', Author, '$author'),
-					Title = IF('$title' = '', Title, '$title'),
-					Year = IF('$year' = '', Year, '$year')
-				WHERE Book_id = '$bookID'";
-
-		if(mysqli_query($dbc, $sql)) {
-		    echo "<p class='bg-success text-white'>Book successfully updated</p>";
-		}else {
-		    echo "<p class='bg-danger text-white'>Error updating book: " . mysqli_error($dbc) . "</p>";
-		}
-	}
 }
 
 ?>

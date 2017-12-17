@@ -4,7 +4,31 @@ include 'includes/header.html';
 include 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  insertRecord($_SESSION["username"], $_POST['first_name'], $_POST['last_name'], $_POST['company'], $_POST['street'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['phone'], $_POST['birthday'], $_POST['association']);
+
+  if (!empty($_POST['first_name']))
+    $fname = trim($_POST['first_name']);
+  if (!empty($_POST['last_name']))
+    $lname = trim($_POST['last_name']);
+  if (!empty($_POST['company']))
+    $company = trim($_POST['company']);
+  if (!empty($_POST['street']))
+    $street = trim($_POST['street']);
+  if (!empty($_POST['city']))
+    $city = trim($_POST['city']);
+  if (!empty($_POST['state']))
+    $state = trim($_POST['state']);
+  if (!empty($_POST['zip']))
+    $zip = trim($_POST['zip']);
+  if (!empty($_POST['email']))
+    $email = trim($_POST['email']);
+  if (!empty($_POST['phone']))
+    $phone = trim($_POST['phone']);
+  if (!empty($_POST['birthday']))
+    $bday = trim($_POST['birthday']);
+  if (!empty($_POST['association']))
+    $assoc = $_POST['association'];
+
+  insertRecord($_SESSION["username"], $fname, $lname, $company, $street, $city, $state, $zip, $email, $phone, $bday, $assoc);
 }
 ?>
 

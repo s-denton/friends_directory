@@ -4,17 +4,17 @@ include 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!empty($_POST['username']))
-		$username = $_POST['username'];
+		$username = trim($_POST['username']);
 	if (!empty($_POST['password']))
 		$password = $_POST['password'];
 	if (!empty($_POST['password-conf']))
 		$confirm_password = $_POST['password-conf'];
 	if (!empty($_POST['firstname']))
-		$firstname = $_POST['firstname'];
+		$firstname = trim($_POST['firstname']);
 	if (!empty($_POST['lastname']))
-		$lastname = $_POST['lastname'];
+		$lastname = trim($_POST['lastname']);
 	if (!empty($_POST['email']))
-		$email = $_POST['email'];
+		$email = trim($_POST['email']);
 	
 	createUser($username, $password, $confirm_password, $firstname, $lastname, $email);
 }

@@ -5,7 +5,7 @@ include 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_SESSION["username"])) {
 	if (!empty($_POST['username']))
-		$username = $_POST['username'];
+		$username = trim($_POST['username']);
 		$_SESSION["username"] = "$username";
 
 	if (!empty($_POST['password']))
