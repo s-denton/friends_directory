@@ -20,6 +20,27 @@ function authenticate($login_username, $login_password) {
 	}
 }
 
+// authenticate admin login information
+function authenticate_admin($login_username, $login_password) {
+	require ('includes/mysqli_connect.php');
+
+	$sql = "SELECT username, password FROM users WHERE BINARY username = '$login_username' and password = '$login_password' and role = 'admin'";
+	$result = $dbc -> query($sql);
+	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	//$active = $row['active'];
+	$count = mysqli_num_rows($result);
+
+	// If result matched $myusername and $mypassword, table row must be 1 row	
+	if($count == 1) {
+	    return true;
+	} else {
+	    $error = "<p class='bg-danger text-white'>Your username or password is invalid</p>";
+	    echo "$error";
+	    echo "<button type='button' class='btn btn-lg btn-primary' style='margin-top: 20px;' onclick='history.back()'>Go Back</button>";
+	    return false;
+	}
+}
+
 // create a new user
 function createUser($username, $password, $confirm_password, $firstname, $lastname, $email) {
 	require ('includes/mysqli_connect.php');

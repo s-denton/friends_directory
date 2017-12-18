@@ -1,7 +1,7 @@
 <?php include 'includes/header.html'; ?>
 
 		<div class="form-container">
-			<form action="directory.php" method="post">
+			<form action="admin_page.php" method="post">
 				<div class="form-group row">
 					<label for="user-login">Username:</label>
 					<input type="text" id="user-login" class="form-control form-control-lg" name="username" size="20" maxlength="40" value="<?php $_POST['username']; ?>">
@@ -11,11 +11,10 @@
 					<input type="password" id="login-password" class="form-control form-control-lg" name="password" size="20" maxlength="40">
 				</div>
 				<div class="form-group row">
-					<button type="button" name="register" onclick="window.location.href='register.php'" class="btn btn-lg btn-primary submit-btn">Register</button>
+					<button type="button" name="back" onclick="window.location.href='index.php'" class="btn btn-lg btn-primary submit-btn">Back</button>
 					<button type="submit" name="submit" class="btn btn-lg btn-success submit-btn">Login</button>
 				</div>
 			</form>
 		</div>
-		<a href="admin_login.php"><p class="text-center small">Admin?</p></a>
 		
 <?php include 'includes/footer.html'; ?>

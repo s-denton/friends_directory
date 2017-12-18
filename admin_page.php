@@ -1,11 +1,13 @@
-<?php 
+<?php
+session_start();
 include 'includes/header.html';
 include 'includes/functions.php';
 
-//if submit is clicked but the admin login is not checked
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['adminlogin']))) {	
+// check credentials
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['username'] == 'admin') {
 	if (!empty($_POST['username']))
 		$username = $_POST['username'];
+		$_SESSION["username"] = $username;
 
 	if (!empty($_POST['password']))
 		$password = $_POST['password'];
@@ -14,12 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['adminlogin']))) {
 		include 'includes/footer.html';
 		exit();
 	}
+} elseif (empty($_SESSION["username"]) || $_SESSION["username"] !== 'admin') {
+	echo "<p class='bg-danger text-white'>Only an administrator may view this page</p>";
+	echo "<button type='button' class='btn btn-lg btn-primary' style='margin-top: 20px;' onclick='history.back()'>Go Back</button>";
+	include 'includes/footer.html';
+	exit();
 }
-
 ?>
-
-<!-- <script src="script/jquery-1.8.1.min.js" type="text/javascript" ></script>
-<script src="js/adminAjax.js" type="text/javascript" ></script> -->
 	<div class="btn-group-vertical">
 		<br>
 		<h2> Email a user here:</h2>			
@@ -96,6 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['adminlogin']))) {
 				<button name="delete" value="delete" class="button btn btn-danger">Delete User</button>
 		    </div>
 		</form>
-
+		<a href="logout.php"><button class="btn btn-primary" type="button" style="margin-top: 10px;"><i class="fa fa-sign-out"></i> Logout</button></a>
 	</div>
 <?php include 'includes/footer.html'; ?>
