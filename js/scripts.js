@@ -1,4 +1,45 @@
 $(document).ready(function() {
+	/////////////// Admin Functions ////////////////
+	$('.button').click(function(){
+		var username = $('#username').val();
+		var password = $('#password').val();
+		var firstname = $('#firstname').val();
+		var lastname = $('#lastname').val();
+		var email = $('#email').val();
+		var role = $('#role').val();
+		var clickBtnValue = $(this).val();
+		var ajaxurl = 'includes/adminFunction.php',
+		data = {username:username,password:password,firstname:firstname,lastname:lastname,email:email,role:role,action:clickBtnValue};
+		$.post(ajaxurl, data, function(response){
+			$('#alert').show();
+ 				$('#result').html(response);
+		});
+	});
+
+	//show email text boxes
+	$('#emailUser').click(function(){
+		$('#adminEmail').show();
+		$('#emailUser').hide();
+	});
+
+	//when send email clicked
+	$('#sendemail').click(function(){
+		var uemail = $('#useremail').val();
+		var subject = $('#subject').val();
+		var msg = $('#comment').val();
+		var clickBtnValue = $(this).val();
+		var ajaxurl = 'includes/adminEmail.php',
+		data = {uemail:useremail,subject:subject,msg:comment,action:clickBtnValue};
+		$.post(ajaxurl, data, function(response){
+			$('#alert1').show();
+ 				$('#result1').html(response);
+		});
+	});
+
+	$(".button").click(function () { 
+    return false; 
+	});	
+	///////////// End Admin Functions //////////////
 
 	////////// Delete Record Script //////////////
 	$(".delete-record-btn").click(function() {
@@ -32,28 +73,6 @@ $(document).ready(function() {
 		}); // end ajax
 	}); // end if confirm delete button is clicked
 	///////// End Delete Record Script //////////////
-
-	/////////// Export to Excel Script //////////////
-	/*
-	$("#export-btn").click(function() {
-		var username = $(this).val();
-		$.ajax({
-			type: "POST",
-			url: "includes/export.php",
-			data: "username=" + username,
-			success: function(text) {
-				msgModalView("Success", "The data was exported successfully, your download will begin shortly");
-				setTimeout(function() {
-					$("#msg-modal").modal('hide');
-				}, 3000);
-			},
-			error: function(result) {
-				alert("Error occurred");
-			}
-		}); // end ajax
-	}); // end if export link is clicked
-	*/
-	////////// End Export to Excel Script /////////////
 
 	//////////////// Update Record Script ////////////////////
 	var record_id = "";

@@ -10,6 +10,10 @@
 					<label for="login-password">Password:</label>
 					<input type="password" id="login-password" class="form-control form-control-lg" name="password" size="20" maxlength="40">
 				</div>
+				<div class="text-center">
+		        <div class="form-check form-check-inline">		          
+		         	<input type="checkbox" name="adminlogin" value="adminlogin"> Admin Login	         
+	         	</div>
 				<div class="form-group row">
 					<button type="button" name="register" onclick="window.location.href='register.php'" class="btn btn-lg btn-primary submit-btn">Register</button>
 					<button type="submit" name="submit" class="btn btn-lg btn-success submit-btn">Login</button>
