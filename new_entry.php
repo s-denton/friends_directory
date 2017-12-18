@@ -45,9 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <a class="nav-link" href="new_entry.php">Add New Entry</a>
         </li>
       </ul>
-      <form class="form-inline" action="login.php">
-      <a href="logout.php"><button class="btn btn-primary" id="nav-btn" type="button"><i class="fa fa-sign-out"></i> Logout</button></a>
-    </form>
+      <button class="btn btn-success nav-btn" type="button" data-value="<?php $_SESSION['username'] ?>"><i class="fa fa-download"></i> Export to Excel</button>
+      <a href="logout.php"><button class="btn btn-primary nav-btn" type="button"><i class="fa fa-sign-out"></i> Logout</button></a>
     </div>
   </nav>
   <hr>

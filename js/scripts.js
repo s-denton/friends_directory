@@ -21,17 +21,39 @@ $(document).ready(function() {
 				msgModalView("Success", "The record was deleted successfully!");
 				setTimeout(function() {
 					$("#msg-modal").modal('hide');
-				}, 4000);
+				}, 3000);
 				setTimeout(function() {
 					location.reload();
-				}, 5000);
+				}, 3500);
 			},
 			error: function(text) {
 				alert("Error occurred");
 			}
 		}); // end ajax
-	}); // end if confirm delete button is pressed
+	}); // end if confirm delete button is clicked
 	///////// End Delete Record Script //////////////
+
+	/////////// Export to Excel Script //////////////
+	/*
+	$("#export-btn").click(function() {
+		var username = $(this).val();
+		$.ajax({
+			type: "POST",
+			url: "includes/export.php",
+			data: "username=" + username,
+			success: function(text) {
+				msgModalView("Success", "The data was exported successfully, your download will begin shortly");
+				setTimeout(function() {
+					$("#msg-modal").modal('hide');
+				}, 3000);
+			},
+			error: function(result) {
+				alert("Error occurred");
+			}
+		}); // end ajax
+	}); // end if export link is clicked
+	*/
+	////////// End Export to Excel Script /////////////
 
 	//////////////// Update Record Script ////////////////////
 	var record_id = "";

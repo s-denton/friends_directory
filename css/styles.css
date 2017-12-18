@@ -28,8 +28,8 @@ select {
 	color: inherit;
 }
 
-#nav-btn {
-	float: right;
+#navigation button {
+	margin-right: 10px;
 }
 
 #page-container {

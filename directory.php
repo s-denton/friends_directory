@@ -5,8 +5,8 @@ include 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_SESSION["username"])) {
 	if (!empty($_POST['username']))
-		$username = trim($_POST['username']);
-		$_SESSION["username"] = "$username";
+		$username = $_POST['username'];
+		$_SESSION["username"] = $username;
 
 	if (!empty($_POST['password']))
 		$password = $_POST['password'];
@@ -35,9 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_SESSION["username"])) {
 	        <a class="nav-link" href="new_entry.php">Add New Entry</a>
 	      </li>
 	    </ul>
-	    <form class="form-inline" action="login.php">
-			<a href="logout.php"><button class="btn btn-primary" id="nav-btn" type="button"><i class="fa fa-sign-out"></i> Logout</button></a>
-		</form>
+	    <a href="javascript:window.location='includes/export.php?username=<?php echo $_SESSION["username"]; ?>'"><button id="export-btn" class="btn btn-success" value="<?php echo $_SESSION['username']; ?>"><i class="fa fa-download"></i> Export to Excel</button></a>
+		<a href="logout.php"><button class="btn btn-primary" type="button"><i class="fa fa-sign-out"></i> Logout</button></a>
 	  </div>
 	</nav>
 	<hr>
